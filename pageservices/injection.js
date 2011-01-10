@@ -3,6 +3,11 @@ function test() {
 };
 test();
 
-chrome.extension.sendRequest({ping: 1}, function(response) {
-    console.log(response.count);
-});
+
+var PSE = {};
+
+PSE.ping = function() {
+    chrome.extension.sendRequest({ping: 1}, function(response) {
+        console.log(response.count);
+    });
+};
