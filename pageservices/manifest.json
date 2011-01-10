@@ -1,0 +1,11 @@
+{
+  "name": "Page Services",
+  "version": "0.1",
+  "description": "Implements a page services API to web pages to expose, share, and request services safely.",
+  "background_page": "background.html",
+  "permissions": [
+    "tabs",
+    "http://*",
+    "notifications"
+  ]
+}
