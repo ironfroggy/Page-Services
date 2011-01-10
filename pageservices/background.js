@@ -19,4 +19,15 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     }
 });
 
+var count = 0;
+chrome.extension.onRequest.addListener(
+    function(request, sender, sendResponse) {
+        console.log("ping received");
+
+        if (request.ping) {
+            count = count + 1;
+            sendResponse({count: count});
+        }
+    }
+);
 var PSE = {};

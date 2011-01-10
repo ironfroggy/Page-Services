@@ -3,4 +3,6 @@ function test() {
 };
 test();
 
-console.log("injection script ran");
+chrome.extension.sendRequest({ping: 1}, function(response) {
+    console.log(response.count);
+});
