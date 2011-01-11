@@ -38,7 +38,12 @@ $(document.body).append('<script type="text/javascript">'+
 '   var ev=document.createEvent("Events");'+
 '   ev.initEvent("pseRequest", false, true);'+
 '   window.dispatchEvent(ev);'+
-'}'+
+'},'+
+
+'registerService: function(service, url, cb) { PSE._sendRequest({do: "registerService", service:service, url:url}, cb); },'+
+'requestService: function(service, cb) { PSE._sendRequest({do: "requestService", service:service}, cb); },'+
+'callService: function(service, method, data, cb) { PSE._sendRequest({do: "callService", service:service, method:method, data:data}, cb); },'+
+
 '};'+
 'window.addEventListener("pseResponse", function(ev) {'+
 '   var response = JSON.parse(document.body.getAttribute("data-__PSE_DATA"));'+

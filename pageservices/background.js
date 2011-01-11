@@ -29,6 +29,21 @@ chrome.extension.onRequest.addListener(
             count = count + 1;
             sendResponse({count: count});
         }
+
+        if (request.data.do) {
+            pse_methods[request.data.do](request, sendResponse);
+        }
     }
 );
-var PSE = {};
+
+pse_methods = {
+    registerService: function(request, sendResponse) {
+        sendResponse({status: "registered"});
+    },
+    requestService: function(request, sendResponse) {
+        sendResponse({status: "found"});
+    },
+    callService: function(request, sendResponse) {
+        sendResponse({status: "method not found"});
+    }
+};
