@@ -1,0 +1,25 @@
+<html>
+<head>
+<script type="text/javascript">
+function PSE_service_init() {
+    console.log("echo initialized");
+};
+
+window.addEventListener("message", function(ev) {
+    var data = JSON.parse(ev.data);
+    if (data.do === "pse_init") {
+        ev.source.postMessage({do: "provideService", service: "echo", method: "echo"}, "*")
+    }
+    if (data.do === "pse_call" && data.method == "echo") {
+        var callback_id = data.callback_id;
+        ev.source.postMessage(JSON.stringify({do: "return", callback_id: callback_id, params: data.params}), "*");
+    }
+}, false);
+
+window.parent.postMessage(JSON.stringify({do: "provideService", service: "echo", method: "echo"}), "*");
+
+</script>
+</head>
+<body>
+</body>
+</html>
