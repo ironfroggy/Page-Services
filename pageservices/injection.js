@@ -11,10 +11,13 @@ PSE.ping = function() {
     });
 };
 
-window.addEventListener('ping', function() {
+window.addEventListener('pseRequest', function(ev) {
+    console.log(JSON.parse($(document.body).attr('data-__PSE_DATA')));
     PSE.ping();
 }, false, true);
 
 $(document.body).append('<script type="text/javascript">'+
-'var PSE={ping:function(){var ev=document.createEvent("Events");ev.initEvent("ping", false, true);window.dispatchEvent(ev);}};'+
+'var PSE={'+
+'_sendRequest:function(data){document.body.setAttribute("data-__PSE_DATA", JSON.stringify(data));var ev=document.createEvent("Events");ev.initEvent("pseRequest", false, true);window.dispatchEvent(ev);}'+
+'};'+
 '</script>');
