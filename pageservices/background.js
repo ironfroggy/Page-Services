@@ -9,6 +9,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     }
 
     function injectJS() {
+        chrome.tabs.executeScript(tabId, {file: "jquery-1.4.4.min.js"});
         chrome.tabs.executeScript(tabId, {file: "injection.js"});
     }
 

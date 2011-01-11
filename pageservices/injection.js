@@ -3,7 +3,6 @@ function test() {
 };
 test();
 
-
 var PSE = {};
 
 PSE.ping = function() {
@@ -11,3 +10,11 @@ PSE.ping = function() {
         console.log(response.count);
     });
 };
+
+window.addEventListener('ping', function() {
+    PSE.ping();
+}, false, true);
+
+$(document.body).append('<script type="text/javascript">'+
+'var PSE={ping:function(){var ev=document.createEvent("Events");ev.initEvent("ping", false, true);window.dispatchEvent(ev);}};'+
+'</script>');
