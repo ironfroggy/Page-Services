@@ -25,18 +25,26 @@ chrome.extension.onRequest.addListener(
     function(request, sender, sendResponse) {
         console.log("ping received");
 
-        if (request.data.ping) {
-            count = count + 1;
-            sendResponse({count: count});
-        }
-
         if (request.data.do) {
             pse_methods[request.data.do](request, sendResponse);
         }
     }
 );
 
-pse_methods = {
+var services = {
+    'shorturl': {
+        'shorten': function(params, cb) {
+            cb({url: params.url+"?shorter=false"});
+        }
+    },
+    'ping': {
+        'ping': function(params, cb) {
+            cb({pong: true});
+        }
+    }
+};
+
+var pse_methods = {
     registerService: function(request, sendResponse) {
         sendResponse({status: "registered"});
     },
@@ -44,6 +52,9 @@ pse_methods = {
         sendResponse({status: "found"});
     },
     callService: function(request, sendResponse) {
-        sendResponse({status: "method not found"});
+        services[request.data.service][request.data.method](request.data.data, function(response) {
+            sendResponse(response);
+        });
     }
 };
+
