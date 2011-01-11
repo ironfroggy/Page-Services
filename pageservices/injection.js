@@ -15,13 +15,16 @@ window.addEventListener('pseRequest', function(ev) {
     var pse_request_params = JSON.parse($(document.body).attr('data-__PSE_DATA'));
     var data = pse_request_params.data;
     var callback_id = pse_request_params.callback_id;
-    PSE.ping();
 
-    $(document.body).attr('data-__PSE_CALLBACK_ID', callback_id);
-    $(document.body).attr('data-__PSE_DATA', JSON.stringify({status: "pong"}));
-    var ev = document.createEvent("Events");
-    ev.initEvent("pseResponse", false, true);
-    window.dispatchEvent(ev);
+    chrome.extension.sendRequest({data:data}, function(resp) {
+
+        $(document.body).attr('data-__PSE_CALLBACK_ID', callback_id);
+        $(document.body).attr('data-__PSE_DATA', JSON.stringify(resp));
+        var ev = document.createEvent("Events");
+        ev.initEvent("pseResponse", false, true);
+        window.dispatchEvent(ev);
+
+    });
 }, false, true);
 
 $(document.body).append('<script type="text/javascript">'+

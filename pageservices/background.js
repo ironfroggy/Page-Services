@@ -25,7 +25,7 @@ chrome.extension.onRequest.addListener(
     function(request, sender, sendResponse) {
         console.log("ping received");
 
-        if (request.ping) {
+        if (request.data.ping) {
             count = count + 1;
             sendResponse({count: count});
         }
