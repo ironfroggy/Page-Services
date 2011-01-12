@@ -1,0 +1,25 @@
+<html>
+<head>
+<script src="jquery-1.4.4.min.js"></script>
+<script>
+    $(function(){
+        console.log("hello from popup.html");
+        chrome.extension.getBackgroundPage().postMessage(JSON.stringify({test: "test"}), "*");
+
+        $('[name=allow]').click(function(){
+            chrome.extension.getBackgroundPage().postMessage(JSON.stringify({confirm: true}), "*");
+        });
+        $('[name=deny]').click(function(){
+            chrome.extension.getBackgroundPage().postMessage(JSON.stringify({confirm: false}), "*");
+        });
+    });
+</script>
+</head>
+<body>
+    <div id="confirmation">
+        Allow use of <span id="service-label">(N/A)</span>?
+        <input type="submit" name="allow" value="allow" />
+        <input type="submit" name="deny" value="deny" />
+    </div>
+</body>
+</html>

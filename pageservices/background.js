@@ -23,8 +23,9 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 var count = 0;
 chrome.extension.onRequest.addListener(
     function(request, sender, sendResponse) {
+        console.log("request to background:", request);
         if (request.data.do) {
-            pse_methods[request.data.do](request, sendResponse);
+            pse_methods[request.data.do](request, sender, sendResponse);
         }
     }
 );
@@ -43,14 +44,16 @@ var services = {
 };
 
 var pse_methods = {
-    registerService: function(request, sendResponse) {
+    registerService: function(request, sender, sendResponse) {
         sendResponse({status: "registered"});
     },
-    requestService: function(request, sendResponse) {
+    requestService: function(request, sender, sendResponse) {
+        console.log(sender, "requested service", request.data.service);
+        chrome.pageAction.show(sender.tab.id);
         addServiceIFrame(request.data.service);
         sendResponse({status: "found"});
     },
-    callService: function(request, sendResponse) {
+    callService: function(request, sender, sendResponse) {
         services[request.data.service][request.data.method](request.data.data, function(response) {
             sendResponse(response);
         });
