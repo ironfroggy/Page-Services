@@ -96,5 +96,7 @@ window.addEventListener("message", function(ev) {
     } else if (data.do === "return") {
         pse_service_callbacks[data.callback_id](data.params);
         delete pse_service_callbacks[data.callback_id];
+    } else if (data.confirm) {
+        ev.source.postMessage("received message", "*");
     }
 }, false);

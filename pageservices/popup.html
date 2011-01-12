@@ -3,8 +3,10 @@
 <script src="jquery-1.4.4.min.js"></script>
 <script>
     $(function(){
-        console.log("hello from popup.html");
-        chrome.extension.getBackgroundPage().postMessage(JSON.stringify({test: "test"}), "*");
+        console.log("hello from popup.html", (new Date()));
+        window.addEventListener("message", function(ev) {
+            console.log("message received", ev.data);
+        });
 
         $('[name=allow]').click(function(){
             chrome.extension.getBackgroundPage().postMessage(JSON.stringify({confirm: true}), "*");
