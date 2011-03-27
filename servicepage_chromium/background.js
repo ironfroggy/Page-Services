@@ -15,7 +15,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 
     console.log(changeInfo.status);
 
-    if (changeInfo.status === "complete") {
+    if (changeInfo.status === "loading") {
         injectJS();
     }
 });
@@ -44,6 +44,10 @@ var services = {
 };
 
 var pse_methods = {
+    _injectDirectScript: function(request, sender, sendResponse) {
+
+    },
+
     registerService: function(request, sender, sendResponse) {
         sendResponse({status: "registered"});
     },
